@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 abstract class SpecialTextSpanBuilder {
   //build text span to specialText
-  TextSpan build(String data,
-      {TextStyle textStyle, SpecialTextGestureTapCallback onTap}) {
+  TextSpan build(String data, {TextStyle textStyle, SpecialTextGestureTapCallback onTap}) {
     if (data == null || data == "") return null;
     List<InlineSpan> inlineList = new List<InlineSpan>();
     if (data.length > 0) {
@@ -23,12 +22,10 @@ abstract class SpecialTextSpanBuilder {
             textStack = "";
           }
         } else {
-          specialText = createSpecialText(textStack,
-              textStyle: textStyle, onTap: onTap, index: i);
+          specialText = createSpecialText(textStack, textStyle: textStyle, onTap: onTap, index: i);
           if (specialText != null) {
             if (textStack.length - specialText.startFlag.length >= 0) {
-              textStack = textStack.substring(
-                  0, textStack.length - specialText.startFlag.length);
+              textStack = textStack.substring(0, textStack.length - specialText.startFlag.length);
               if (textStack.length > 0) {
                 inlineList.add(TextSpan(text: textStack, style: textStyle));
               }
@@ -39,9 +36,8 @@ abstract class SpecialTextSpanBuilder {
       }
 
       if (specialText != null) {
-        inlineList.add(TextSpan(
-            text: specialText.startFlag + specialText.getContent(),
-            style: textStyle));
+        inlineList.add(
+            TextSpan(text: specialText.startFlag + specialText.getContent(), style: textStyle));
       } else if (textStack.length > 0) {
         inlineList.add(TextSpan(text: textStack, style: textStyle));
       }
