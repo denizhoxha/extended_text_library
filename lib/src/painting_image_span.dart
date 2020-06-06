@@ -1,10 +1,11 @@
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
+import 'package:extended_text_library/extended_text_library.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'dart:ui' as ui;
-import 'special_inline_span_base.dart';
+
 import 'special_text_span.dart';
 
 /// workaround for WidgetSpan
@@ -28,6 +29,7 @@ double dpToFontSize(double dp) {
   return dp / 30.0 * 26.0;
 }
 
+// ignore: unused_element
 class _PaintingImageSpan extends SpecialTextSpan {
   ///image provider
   final ImageProvider image;
@@ -76,10 +78,8 @@ class _PaintingImageSpan extends SpecialTextSpan {
           style: TextStyle(
             color: Colors.transparent,
             height: 1,
-            letterSpacing:
-                imageWidth + (margin == null ? 0 : margin.horizontal),
-            fontSize: dpToFontSize(
-                imageHeight + (margin == null ? 0 : margin.vertical)),
+            letterSpacing: imageWidth + (margin == null ? 0 : margin.horizontal),
+            fontSize: dpToFontSize(imageHeight + (margin == null ? 0 : margin.vertical)),
           ),
           actualText: actualText,
           start: start,
@@ -88,8 +88,7 @@ class _PaintingImageSpan extends SpecialTextSpan {
         );
 
   void createImageConfiguration(BuildContext context) {
-    imageSpanResolver.createimageConfiguration(
-        context, imageWidth, imageHeight);
+    imageSpanResolver.createimageConfiguration(context, imageWidth, imageHeight);
   }
 
   void resolveImage({ImageListener listener}) {
@@ -136,8 +135,8 @@ class _PaintingImageSpan extends SpecialTextSpan {
   }
 
   @override
-  int get hashCode => hashValues(style, text, actualText, start, deleteAll,
-      image, imageWidth, imageHeight, margin, fit, clearMemoryCacheIfFailed);
+  int get hashCode => hashValues(style, text, actualText, start, deleteAll, image, imageWidth,
+      imageHeight, margin, fit, clearMemoryCacheIfFailed);
 
   @override
   RenderComparison compareTo(InlineSpan other) {
@@ -149,8 +148,7 @@ class _PaintingImageSpan extends SpecialTextSpan {
         return RenderComparison.layout;
       }
 
-      if (other.image != image ||
-          other.clearMemoryCacheIfFailed != clearMemoryCacheIfFailed) {
+      if (other.image != image || other.clearMemoryCacheIfFailed != clearMemoryCacheIfFailed) {
         return RenderComparison.paint;
       }
     }
@@ -181,12 +179,9 @@ class ImageSpanResolver {
 //      _resolveImage();
 //  }
 
-  void createimageConfiguration(
-      BuildContext context, double imageWidth, double imageHeight) {
+  void createimageConfiguration(BuildContext context, double imageWidth, double imageHeight) {
     _imageConfiguration = createLocalImageConfiguration(context,
-        size: (imageWidth != null && imageHeight != null)
-            ? Size(imageWidth, imageHeight)
-            : null);
+        size: (imageWidth != null && imageHeight != null) ? Size(imageWidth, imageHeight) : null);
   }
 
   void resolveImage({ImageListener listener, ImageProvider image}) {
@@ -222,15 +217,13 @@ class ImageSpanResolver {
 
   void _listenToStream() {
     if (_isListeningToStream) return;
-    _imageStream?.addListener(
-        ImageStreamListener(_handleImageChanged, onError: _loadFailed));
+    _imageStream?.addListener(ImageStreamListener(_handleImageChanged, onError: _loadFailed));
     _isListeningToStream = true;
   }
 
   void _stopListeningToStream() {
     if (!_isListeningToStream) return;
-    _imageStream?.removeListener(
-        ImageStreamListener(_handleImageChanged, onError: _loadFailed));
+    _imageStream?.removeListener(ImageStreamListener(_handleImageChanged, onError: _loadFailed));
     _isListeningToStream = false;
   }
 
